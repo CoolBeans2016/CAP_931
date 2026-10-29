@@ -1,3 +1,12 @@
 .streamlit/secrets.toml
 **/.streamlit/secrets.toml
 secrets.toml
+
+.env
+**/.env
+.venv/
+.venv-cap931-existing/
+__pycache__/
+*.pyc
+secrets.toml
+.streamlit/secrets.toml

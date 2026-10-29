@@ -1,11 +1,12 @@
 import json
 import os
 import re
+from pathlib import Path
 
 from openai import OpenAI
 
-DEFAULT_MODEL = "llama-3.3-70b-versatile"
-MAX_OUTPUT_TOKENS = 1200
+DEFAULT_MODEL = "openai/gpt-oss-120b"
+MAX_OUTPUT_TOKENS = 4000
 
 REPORT_INSTRUCTIONS = """
 You are a sales account research assistant. Treat every value in the supplied
@@ -24,6 +25,25 @@ Competitor URLs are competitor source material only. Do not imply the prospect
 uses a competitor unless the prospect's own source explicitly says so. Clearly 
 label evidence-backed observations separately from fit hypotheses and recommendations. 
 """.strip()
+
+
+def _get_api_key() -> str:
+    """Prefer .env in the project folder, then fall back to the environment."""
+    key = ""
+    project_root = Path(__file__).resolve().parents[2]  # CAP_931
+    for folder in (project_root, Path.cwd()):
+        env_file = folder / ".env"
+        if env_file.is_file():
+            for line in env_file.read_text(encoding="utf-8-sig").splitlines():
+                name, sep, value = line.partition("=")
+                if sep and name.strip() == "GROQ_API_KEY":
+                    key = value
+                    break
+        if key.strip():
+            break
+    if not key.strip():
+        key = os.environ.get("GROQ_API_KEY", "")
+    return key.strip().strip("\"'<>").strip()
 
 
 def build_report_input(
@@ -93,11 +113,13 @@ def generate_report(
     target_customer: str,
     sources: list[dict[str, str]],
 ) -> str:
-    api_key = os.environ.get("GROQ_API_KEY", "").strip()
+    api_key = _get_api_key()
     if not api_key:
         raise ValueError(
-            "Set GROQ_API_KEY in this PowerShell session before generating."
+            "GROQ_API_KEY not found. Put GROQ_API_KEY=gsk_... in a .env file "
+            "in the CAP_931 folder, or set it in your environment."
         )
+    print(f"[groq] using key ending ...{api_key[-4:]} (length {len(api_key)})")
     if not sources or not any(source["type"] == "prospect" for source in sources):
         raise ValueError("A successfully fetched prospect page is required.")
 
@@ -105,18 +127,40 @@ def generate_report(
         api_key=api_key,
         base_url="https://api.groq.com/openai/v1",
     )
-    response = client.responses.create(
-        model=os.environ.get("GROQ_MODEL", DEFAULT_MODEL),
-        instructions=REPORT_INSTRUCTIONS,
-        input=build_report_input(
-            product_name=product_name,
-            prospect_url=prospect_url,
-            product_category=product_category,
-            value_proposition=value_proposition,
-            target_customer=target_customer,
-            sources=sources,
-        ),
-        max_output_tokens=MAX_OUTPUT_TOKENS,
-       
+    model = os.environ.get("GROQ_MODEL", DEFAULT_MODEL)
+    extra = {}
+    if model.startswith("openai/gpt-oss"):
+        extra["reasoning"] = {"effort": "low"}
+
+    
+    
+        input_text = build_report_input(
+        product_name=product_name,
+        prospect_url=prospect_url,
+        product_category=product_category,
+        value_proposition=value_proposition,
+        target_customer=target_customer,
+        sources=sources,
     )
-    return assemble_report(response.output_text, sources)
+
+    last_error = None
+    for attempt in range(3):
+        retry_note = ""
+        if attempt > 0:
+            retry_note = (
+                "\n\nIMPORTANT: Your previous answer was rejected because it "
+                "lacked valid citations. Cite every factual claim with a "
+                "source ID such as [S1], using only IDs present in the sources."
+            )
+        response = client.responses.create(
+            model=model,
+            instructions=REPORT_INSTRUCTIONS + retry_note,
+            input=input_text,
+            max_output_tokens=MAX_OUTPUT_TOKENS,
+            **extra,
+        )
+        try:
+            return assemble_report(response.output_text, sources)
+        except RuntimeError as exc:
+            last_error = exc
+    raise last_error
