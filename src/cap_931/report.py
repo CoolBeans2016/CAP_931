@@ -119,7 +119,7 @@ def generate_report(
             "GROQ_API_KEY not found. Put GROQ_API_KEY=gsk_... in a .env file "
             "in the CAP_931 folder, or set it in your environment."
         )
-    print(f"[groq] using key ending ...{api_key[-4:]} (length {len(api_key)})")
+    
     if not sources or not any(source["type"] == "prospect" for source in sources):
         raise ValueError("A successfully fetched prospect page is required.")
 
