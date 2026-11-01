@@ -34,7 +34,7 @@ The goal is to support a sales researcher or account manager who wants a one-pag
 1. Open PowerShell in the project root:
 
    ```powershell
-   Set-Location "C:\Users\Lenovo\Documents\CODE\PER_SCHOLAS\CAX_215\MODULE_930\CAP_931"
+   Set-Location "C:\Users\Lenovo\Documents\CODE\PER_SCHOLAS\CAX_215\MODULE_931\CAP_931"
    ```
 
 2. Use the project virtual environment instead of the system Python:
@@ -61,7 +61,7 @@ The goal is to support a sales researcher or account manager who wants a one-pag
 ## Run the app
 
 ```powershell
-Set-Location "C:\Users\Lenovo\Documents\CODE\PER_SCHOLAS\CAX_215\MODULE_930\CAP_931"
+Set-Location "C:\Users\Lenovo\Documents\CODE\PER_SCHOLAS\CAX_215\MODULE_931\CAP_931"
 .\.venv\Scripts\python.exe -m streamlit run app.py
 ```
 
@@ -85,12 +85,20 @@ http://localhost:8501
    - avoid inventing facts, leaders, or signals not present in the source pages
 7. The report is displayed in the Streamlit app and can be downloaded as Markdown.
 
+## Sample assignment deliverable
+
+A generated account brief for Cohere Cyber Secure, with Dataprise included as a
+competitor source, is available at
+[`src/cap_931/sales-account-brief.md`](src/cap_931/sales-account-brief.md).
+The brief separates sourced company observations from conditional fit
+hypotheses and includes discovery questions and cited source links.
+
 ## Testing and validation
 
 The assignment was validated using the project test suite:
 
 ```powershell
-Set-Location "C:\Users\Lenovo\Documents\CODE\PER_SCHOLAS\CAX_215\MODULE_930\CAP_931"
+Set-Location "C:\Users\Lenovo\Documents\CODE\PER_SCHOLAS\CAX_215\MODULE_931\CAP_931"
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
@@ -134,4 +142,3 @@ This approach is suitable for a controlled demo but should be reviewed before an
 ## Time and project status
 
 This assignment was completed as a working prototype with the required core behavior, validation tests, and a verified app startup. The project is ready for demonstration and explanation in class.
-

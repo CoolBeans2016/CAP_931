@@ -51,6 +51,22 @@ class ReportTests(unittest.TestCase):
             "Clearly label evidence-backed observations separately from fit hypotheses and recommendations.",
             normalized,
         )
+        self.assertIn(
+            "do not infer or invent features from the product name or category.",
+            normalized,
+        )
+        self.assertIn(
+            "Fit hypotheses must compare only stated product capabilities with prospect evidence.",
+            normalized,
+        )
+        self.assertIn(
+            "Write each fit hypothesis conditionally:",
+            normalized,
+        )
+        self.assertIn(
+            "do not claim Sage is better, top, or superior without comparative evidence.",
+            normalized,
+        )
 
 
 if __name__ == "__main__":
