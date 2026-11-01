@@ -140,7 +140,7 @@ Additional runtime verification was also performed by starting the Streamlit app
 This version uses the Groq OpenAI-compatible API with the default model:
 
 ```text
-llama-3.3-70b-versatile
+openai/gpt-oss-120b
 ```
 
 The implementation uses the OpenAI Python SDK against the Groq endpoint because Groq provides an OpenAI-compatible API surface.
