@@ -87,11 +87,28 @@ http://localhost:8501
 
 ## Sample assignment deliverable
 
-A generated account brief for Cohere Cyber Secure, with Dataprise included as a
-competitor source, is available at
+A generated account brief for Cohere Cyber Secure, with Dataprise and NinjaOne
+included as comparison sources, is available at
 [`src/cap_931/sales-account-brief.md`](src/cap_931/sales-account-brief.md).
-The brief separates sourced company observations from conditional fit
-hypotheses and includes discovery questions and cited source links.
+Sage Hybrid Monitoring is fictional and used as a proposed product concept for
+the assignment. The brief separates Sage's intended design from sourced company
+claims, distinguishes managed-service providers from software vendors, and
+includes conditional fit hypotheses, discovery questions, and citations.
+
+### How to explain the comparison
+
+- **Sage** is the fictional product concept: a proposed cloud-hosted SaaS view
+  for MSPs to monitor customer environments across on-premises and cloud
+  systems. Treat these as design goals, not verified market claims.
+- **Cohere Cyber Secure** is the prospect in this example. Its public page is
+  evidence about its stated services, not evidence that it needs Sage.
+- **Dataprise** is a managed IT and cybersecurity services provider, so it is a
+  service-model comparison rather than a like-for-like software vendor.
+- **NinjaOne** is a software-platform comparison. Compare only the capabilities
+  described on the supplied NinjaOne page.
+- **Fit hypotheses** are conditional questions to investigate, not facts or
+  proof that Sage is better. The source citations support company statements;
+  Sage's fictional design comes from the project brief.
 
 ## Testing and validation
 

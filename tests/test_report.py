@@ -56,7 +56,7 @@ class ReportTests(unittest.TestCase):
             normalized,
         )
         self.assertIn(
-            "Fit hypotheses must compare only stated product capabilities with prospect evidence.",
+            "Fit hypotheses must compare stated Sage design capabilities with prospect evidence.",
             normalized,
         )
         self.assertIn(
@@ -64,7 +64,23 @@ class ReportTests(unittest.TestCase):
             normalized,
         )
         self.assertIn(
-            "do not claim Sage is better, top, or superior without comparative evidence.",
+            "Do not call Sage better, top, or superior without comparative evidence.",
+            normalized,
+        )
+        self.assertIn(
+            "it is a fictional product concept created for this project",
+            normalized,
+        )
+        self.assertIn(
+            "do not attach company-source citations to those statements.",
+            normalized,
+        )
+        self.assertIn(
+            "include a Markdown comparison table with columns for company and business type",
+            normalized,
+        )
+        self.assertIn(
+            "managed-service providers from software vendors",
             normalized,
         )
 

@@ -197,10 +197,22 @@ with st.form("account_inputs"):
         "Start with your product and prospect. Public-page research is "
         "collected before the brief is generated."
     )
-    product_name = st.text_input("Product name")
+    product_name = st.text_input(
+        "Product name",
+        help=(
+            "Sage Hybrid Monitoring is a fictional product concept for this "
+            "assignment. Describe its intended capabilities in the value proposition."
+        ),
+    )
     company_url = st.text_input("Prospect company URL")
     product_category = st.text_input("Product category")
-    competitor_urls = st.text_area("Competitor URLs (one per line)")
+    competitor_urls = st.text_area(
+        "Competitor URLs (one per line)",
+        help=(
+            "Add one public company or product URL per line. These pages are "
+            "market comparisons only; they do not prove the prospect uses those products."
+        ),
+    )
     value_proposition = st.text_area(
         "Value proposition",
         help=(
